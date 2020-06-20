@@ -11,34 +11,13 @@
     <title>結帳</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" />
-<!--     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC&display=swap" rel="stylesheet"> -->
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC&display=swap">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/front-end/product/css/ShoppingCartAccount.css">
 </head>
 
 <body>
-
     <!-- 購物車、結帳、全部訂單 -->
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12 col-md-4">
-                <h2>
-                    <p>1.購物車</p>
-                </h2>
-            </div>
-            <div class="col-sm-12 col-md-4">
-                <h2>
-                    <p style="color: red;">2.結帳</p>
-                </h2>
-            </div>
-            <div class="col-sm-12 col-md-4">
-                <h2>
-                    <p>3.訂單總覽</p>
-                </h2>
-            </div>
-        </div>
-    </div>
-    <br>
+
 
     <!-- 商品欄位 -->
     <div class="container">
@@ -46,6 +25,7 @@
             <table class="table">
                 <thead style="background-color: orange;">
                     <tr>
+
                         <th scope="col">
                             <h3 style="margin:auto;">商品圖片</h3>
                         </th>
@@ -61,13 +41,11 @@
                         <th scope="col">
                             <h3 style="margin:auto;">小計</h3>
                         </th>
-                        <th scope="col">
-                            <h3 style="margin:auto;">備註</h3>
-                        </th>
                     </tr>
                 </thead>
                 <tbody id="CartBody">
-                   
+                    <!-- 放動態生成的商品明細 -->
+
                 </tbody>
             </table>
         </div>
@@ -89,7 +67,7 @@
             </div>
 
             <!-- 門市訊息 -->
-            <div class="col-6 text-left" style="margin-top: 5px;">
+            <div style="margin-top: 5px;">
                 <div class="row">
                     <div class="col-sm-12 col-md-8">
                         <h4>門市資訊:</h4>
@@ -194,7 +172,8 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal"
                                     style="margin: auto;">取消</button>
-                                <button type="button" class="btn btn-primary" style="margin: auto;">確定</button>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                    style="margin: auto;">確定</button>
                             </div>
                         </div>
                     </div>
@@ -202,13 +181,7 @@
             </div>
         </div>
     </div>
-
     <br>
-
-    <!-- GOOGLE map -->
-    <!-- <div id="map -none"></div> -->
-
-    <!-- 信用卡 -->
     <div class="container">
         <div class="row" id="credit" style=" border: 3px solid black">
             <div class="col-sm-12 col-md-4">
@@ -219,29 +192,31 @@
                     <input type="radio" name="payment" value=" 信用卡" checked>信用卡
                     <i class="fa fa-credit-card" style="font-size: 20px;" id="animatcredit"></i>
                     <br>
-                    <input type="radio" name="payment" value="PayPal">PayPal
-                    <i class="fab fa-cc-paypal" style="font-size: 20px;"></i>
-                    <p>
+                    <input type="radio" name="payment" value="PayPal">一般付款
                 </form>
             </div>
 
-            <div class="col-sm-12 col-md-4" style="text-align: center; margin-top: 5px;">
-                <h3>
-                    訂單總金額:$1000
-                </h3>
-                <p>(包含運費)</p>
+            <div class="col-sm-12 col-md-4" style="text-align: center; margin-top: 5px; font-size: 30px;">
+                <p>
+                    訂單總金額:
+                </p>
+                <div class="row" style="margin-top: -25px; margin-left: 130px;">$
+                    <p>
+                        1000
+                    </p>
+                </div>
             </div>
 
             <div class="col-sm-12 col-md-4">
                 <div class="row">
-                    <a href="<%=request.getContextPath()%>/front-end/product/ProductHomepage.jsp" class="btn btn-secondary">
-                        商城首頁
+                    <a href="<%=request.getContextPath()%>/front-end/product/ShoppingCart.jsp">
+                        <button type="button" class="btn btn-secondary" id="BackToShoppingCartS">回到購物車</button>
                     </a>
+
                     <input class="btn btn-secondary" style="margin-left: 80px;" id="Final_order" type="submit"
                         value="送出訂單">
-                    <!-- <a href="" class="btn btn-secondary" style="margin-left: 80px;" id="Final_order">
-                        送出訂單
-                    </a> -->
+
+
                 </div>
             </div>
         </div>
@@ -387,19 +362,13 @@
         </div>
     </div>
 
+
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-<!--     <script -->
-<!--         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLtndsZXO550KJIZSzmj1a5Yt5Ot0j7sw&callback=initMap&libraries=&v=weekly" -->
-<!--         defer> -->
-<!--     </script> -->
     <script src="<%=request.getContextPath()%>/front-end/product/js/ShoppingCartAccount.js"></script>
-
 </body>
 
-</html>
 </html>

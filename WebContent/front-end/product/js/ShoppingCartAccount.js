@@ -59,13 +59,9 @@ setTimeout(function () {
 }, 500);
 
 
-// google map
-// $('div').find('#marker').on('click', function () {
-//     $("#map").removeClass("-none");
-// });
-
 //信用卡輸入
 $('#animatcredit').on('click', function () {
+    console.log(123)
     $(document).ready(function () {
         $("#creditanimation").modal('show');
     });
@@ -83,7 +79,6 @@ $('#Final_order').on('click', function () {
 
     swalWithBootstrapButtons.fire({
         title: '確定送出訂單',
-        // text: "You won't be able to revert this!",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: '送出訂單',
@@ -91,51 +86,43 @@ $('#Final_order').on('click', function () {
         reverseButtons: true
     }).then((result) => {
         if (result.value) {
-            swalWithBootstrapButtons.fire(
-//                '已完成交易',
-            )
+            window.location.href = `連結訂單主檔`
         }
-
     })
 });
 
-
-
-//抓取資料
+// 抓取local修改完的資料
 $(document).ready(function () {
     if (localStorage.getItem("CartList") !== null) {
+
         let CartList = JSON.parse(localStorage.getItem("CartList"));
         let counter = 0;
 
         CartList.CartList_Array.forEach(function (Item, index) {
-        	console.log(index);
+            console.log(index);
             $("#CartBody").append(
-
                 `<tr class="tr" id="${"A"+ counter }">
                         <th scope="row">
                             <div class="photo">
-                               <img src = "${Item.product_image}"></img>
+                                <img src = "${Item.product_image}"></img>
                             </div>
                         </th>
                         <td>
                             <div class="name">
                                 <p>${Item.product_name}</p>
-                                <div class="row">
-                                <p>${Item.version_name}</p>
-                                </div>
                             </div>
                         </td>
                         <td>
                             <div class="price">
-                                <p>$
+                               <p>$
                                     <span class="price">${Item.product_price}</span>
                                 </p>
                             </div>
                         </td>
                         <td id="AAA">
-                            <div class="container" id="count">
+                            <div class="container">
                                 <div id="box">
-                                    <span>${Item.product_count}</span>
+                                   <span>${Item.product_count}</span>
                                 </div>
                             </div>
                         </td>
@@ -143,19 +130,12 @@ $(document).ready(function () {
                         <td>
                             <div class="total">
                                 <p>$
-                                    <span class="total">${Item.product_count * Item.product_price}</span>
+                                    <span class="total">${Item.product_price*Item.product_count}</span>
                                 </p>
                             </div>
                         </td>
-
-                        <td>
-                            <i class="fa fa-trash" id="trash" >
-
-                            </i>
-                        </td>
-                    < /tr>
+                    </tr>
                     `
-
             );
             counter = counter + 1;
         });
