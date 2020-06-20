@@ -14,27 +14,7 @@
 </head>
 
 <body>
-    <!-- 購物車、結帳、全部訂單 -->
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12 col-md-4">
-                <h2>
-                    <p style="color: red;">1.購物車</p>
-                </h2>
-            </div>
-            <div class="col-sm-12 col-md-4">
-                <h2>
-                    <p>2.結帳</p>
-                </h2>
-            </div>
-            <div class="col-sm-12 col-md-4">
-                <h2>
-                    <p>3.訂單總覽</p>
-                </h2>
-            </div>
-        </div>
-    </div>
-    <br>
+
 
     <!-- 商品欄位 -->
     <div class="container">

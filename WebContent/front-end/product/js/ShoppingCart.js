@@ -156,17 +156,17 @@ $(document).ready(function () {
             $("#CartBody").append(
 
                 `<tr class="tr" id="${"A"+ counter }">
-                        <th scope="row">
-                            <div class="photo">
+                        <th scope="row" >
+                            <div class="photo" style="padding-top: 25px;">
                                <img src = "${Item.product_image}"></img>
                             </div>
                         </th>
                         <td>
                             <div class="name">
                                 <p>${Item.product_name}</p>
-                                <div class="row">
-                                <p>${Item.version_name}</p>
-                                </div>
+                               
+                                <p style="margin-top:0px">${Item.version_name}</p>
+                               
                             </div>
                         </td>
                         <td>

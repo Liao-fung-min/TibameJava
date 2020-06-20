@@ -48,7 +48,7 @@ td i#trash:hover {
 
 /* 數量 */
 #AAA {
-    display: flex;
+    padding-top: 60px;
     justify-content: center;
     margin-top: 50px;
 
