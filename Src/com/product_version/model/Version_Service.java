@@ -1,6 +1,8 @@
 package com.product_version.model;
 
+import java.sql.Connection;
 import java.util.List;
+
 
 public class Version_Service {
 	private Version_DAO_interface dao;
@@ -37,6 +39,11 @@ public class Version_Service {
 	
 	public List<Version_VO> getbyProductID(String product_id) {
 		return dao.getbyProductID(product_id);
+
+	}
+	public Version_VO addVersion2(Version_VO version_VO,Connection con) {
+		dao.insert2(version_VO, con);
+		return version_VO;
 
 	}
 	

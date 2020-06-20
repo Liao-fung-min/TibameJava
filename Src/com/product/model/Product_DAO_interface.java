@@ -3,6 +3,8 @@ package com.product.model;
 import java.util.List;
 import java.util.Map;
 
+import com.product_version.model.Version_VO;
+
 public interface Product_DAO_interface {
 
 	public void insert(Product_VO product_VO);
@@ -27,5 +29,8 @@ public interface Product_DAO_interface {
 
 //最高評分
 	public List<Product_VO> highScore();
-
+	
+//同時增加產品跟規格
+public void insertWithVersion(Product_VO product_VO,List<Version_VO> list);
+	
 }

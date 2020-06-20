@@ -38,7 +38,7 @@ public class ProductImage extends HttpServlet {
 				}
 				in.close();
 			}  else {
-				InputStream is = getServletContext().getResourceAsStream("/resources/images/tomcat.png");
+				InputStream is = getServletContext().getResourceAsStream("/resources/images/ProductImage/NoResultProduct/NoResultProduct.jpg");
 				byte[] buf = new byte[is.available()];
 				is.read(buf);
 				out.write(buf);
@@ -49,7 +49,7 @@ public class ProductImage extends HttpServlet {
 			stmt.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			InputStream is = getServletContext().getResourceAsStream("/resources/images/tomcat.png");	
+			InputStream is = getServletContext().getResourceAsStream("/resources/images/ProductImage/NoResultProduct/NoResultProduct.jpg");	
 			byte[] buf = new byte[is.available()];
 			is.read(buf);
 			out.write(buf);

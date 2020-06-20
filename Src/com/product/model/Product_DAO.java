@@ -20,6 +20,10 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import com.product.model.jdbcUtil_CompositeQuery_Emp2;
+import com.product_order_detail.model.Order_detail_DAO;
+import com.product_order_detail.model.Order_detail_VO;
+import com.product_version.model.Version_DAO;
+import com.product_version.model.Version_VO;
 
 public class Product_DAO implements Product_DAO_interface {
 
@@ -571,7 +575,93 @@ public class Product_DAO implements Product_DAO_interface {
 		}
 		return list;
 	}
+	
+	@Override
+	public void insertWithVersion(Product_VO product_VO, List<Version_VO> list) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
 
+		try {
+
+			con = ds.getConnection();
+			
+			// 1●設定於 pstm.executeUpdate()之前
+    		con.setAutoCommit(false);
+//    		INSERT INTO product (member_id, name, class, description, image1, image2, image3, image4, product_state) VALUES(?,?,?,?,?,?,?,?,?)
+    		// 先新增訂單主檔編號
+			String cols[] = {"PRODUCT_ID"};
+			pstmt = con.prepareStatement(INSERT_STMT , cols);			
+			pstmt.setString(1, product_VO.getMember_id());
+			pstmt.setString(2, product_VO.getName());
+			pstmt.setString(3, product_VO.getProduct_class());
+			pstmt.setBytes(4, product_VO.getDescription());
+			pstmt.setBytes(5, product_VO.getImage1());
+			pstmt.setBytes(6, product_VO.getImage2());
+			pstmt.setBytes(7, product_VO.getImage3());
+			pstmt.setBytes(8, product_VO.getImage4());
+			pstmt.setInt(9, product_VO.getProduct_state());
+			pstmt.executeUpdate();
+			//掘取對應的自增主鍵值
+			String next_product_id = null;
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if (rs.next()) {
+				next_product_id = rs.getString(1);
+				System.out.println("自增主鍵值= " + next_product_id +"(剛新增成功的訂單主檔編號)");
+			} else {
+				System.out.println("未取得自增主鍵值");
+			}
+			rs.close();
+			// 再同時新增明細
+			Version_DAO dao = new Version_DAO();
+			System.out.println("list.size()-A="+list.size());
+			for (Version_VO aDetail : list) {
+				aDetail.setProduct_id(next_product_id) ;
+				dao.insert2(aDetail,con);
+			}
+
+			// 2●設定於 pstm.executeUpdate()之後
+			con.commit();
+			con.setAutoCommit(true);
+			System.out.println("list.size()-B="+list.size());
+			System.out.println("新增產品編號" + next_product_id + "時,共有版本" + list.size()
+					+ "人同時被新增");
+			
+			
+		} catch (SQLException se) {
+			if (con != null) {
+				try {
+					// 3●設定於當有exception發生時之catch區塊內
+					System.err.print("Transaction is being ");
+					System.err.println("rolled back-由-dept");
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. "
+							+ excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+
+	
+	
 	public static void main(String[] args) throws IOException {
 		Product_DAO dao = new Product_DAO();
 		// INSERT INTO
@@ -648,6 +738,10 @@ public class Product_DAO implements Product_DAO_interface {
 					+ all.getCreate_time() + "," +all.getPrice());
 		}
 	}
+
+	
+
+	
 
 	
 

@@ -24,7 +24,7 @@ public class Version_DAO implements Version_DAO_interface {
 				}
 			}
 
-	private static final String INSERT_STMT = "INSERT INTO product_version(product_id,version_name,price,inventory) VALUES(?,?,?,?)";
+	private static final String INSERT_STMT = "INSERT INTO product_version(product_version_id,product_id,version_name,price,inventory) VALUES(PVI_SEQ.NEXTVAL,?,?,?,?)";
 	private static final String UPDATE = "UPDATE product_version SET version_name=?, price=?, inventory=? WHERE product_version_id=?";
 	private static final String DELETE = "DELETE FROM product_version WHERE product_version_id=? ";
 	private static final String GET_ONE_STMT = "SELECT product_version_id, product_id, version_name, price, inventory FROM product_version WHERE product_version_id=?";
@@ -323,7 +323,48 @@ public class Version_DAO implements Version_DAO_interface {
 		return list;
 	}
 	
-	
+	//自增主建
+	@Override
+	public void insert2(Version_VO version_VO, Connection con) {
+		PreparedStatement pstmt = null;
+
+		try {
+
+     		pstmt = con.prepareStatement(INSERT_STMT);
+//     		INSERT INTO product_version(product_version_id,product_id,version_name,price,inventory) VALUES(PVI_SEQ.NEXTVAL,?,?,?,?)
+     		pstmt.setString(1, version_VO.getProduct_id());
+			pstmt.setString(2, version_VO.getVersion_name());
+			pstmt.setInt(3, version_VO.getPrice());
+			pstmt.setInt(4, version_VO.getInventory());
+			pstmt.executeUpdate();
+
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			if (con != null) {
+				try {
+					// 3●設定於當有exception發生時之catch區塊內
+					System.err.print("Transaction is being ");
+					System.err.println("rolled back-由-detail");
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. "
+							+ excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		}
+		
+	}
 
 	public static void main(String[] args) {
 		Version_DAO dao = new Version_DAO();
@@ -364,6 +405,8 @@ public class Version_DAO implements Version_DAO_interface {
 //		}
 
 	}
+
+	
 
 	
 
