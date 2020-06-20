@@ -67,30 +67,59 @@ $(document).on("click", ".next", function () {
     let foo = $(this).closest(".container").find("#box span").html();
     foo = parseInt(foo);
     let price = $(this).closest('tr.tr').find('span.price').html();
-    console.log(price)
+//    console.log(price)
     $(this).closest(".container").find("#box span").html(foo + 1);
-    console.log(foo + 1)
+    let count= foo + 1
+    console.log(count)
     $(this).closest('tr.tr').find('span.total').html(price * (foo + 1));
 
     if (foo >= 99) {
         foo = 0;
     }
+    
+    
+    let pricebefore =getCartList ();
+    let getversion_id = $(this).attr("data-version-id");
+    let bar = "";
+    $(pricebefore).each(function(index, item){
+    	if(this.product_version_id == getversion_id){
+    		bar = index;
+    		item.product_count = item.product_count + 1;   	
+    	}
+    });
+    total();
+    setCartList(pricebefore);
+    
+    
 
 });
 
 $(document).on("click", ".prev", function () {
     let foo = $(this).closest(".container").find("#box span").html();
     let price = $(this).closest('tr.tr').find('span.price').html();
-    console.log(price)
-
-    console.log(price)
-    console.log(foo)
+//    console.log(price)
+//
+//    console.log(price)
+//    console.log(foo)
     foo = parseInt(foo);
     if (foo < 2) {
         foo = 2;
     }
     $(this).closest(".container").find("#box span").html(foo - 1);
     $(this).closest('tr.tr').find('span.total').html(price * (foo - 1));
+    
+    let pricebefore =getCartList ();
+    let getversion_id = $(this).attr("data-version-id");
+    let bar = "";
+    $(pricebefore).each(function(index, item){
+    	if(this.product_version_id == getversion_id){
+    		bar = index;
+    		item.product_count = item.product_count - 1;   	
+    	}
+    });
+    total();
+    setCartList(pricebefore);
+    
 });
 
 
@@ -122,7 +151,7 @@ $(document).ready(function () {
         let counter = 0;
 
         CartList.CartList_Array.forEach(function (Item, index) {
-        	console.log(Item);
+
         
             $("#CartBody").append(
 
@@ -149,8 +178,8 @@ $(document).ready(function () {
                         </td>
                         <td id="AAA">
                             <div class="container" id="account">
-                                <span class="next"></span>
-                                <span class="prev"></span>
+                                <span class="next" data-version-id="${Item.product_version_id}"></span>
+                                <span class="prev" data-version-id="${Item.product_version_id}"></span>
                                 <div id="box">
                                     <span>${Item.product_count}</span>
                                 </div>
@@ -196,7 +225,6 @@ function getCartList () {
 	let jsonStr = localStorage.getItem("CartList");
 	let obj = JSON.parse(jsonStr);
 	let cartList = obj.CartList_Array;
-	console.log(cartList);
 	return cartList; 
 }
 //把localstorage的值丟回去

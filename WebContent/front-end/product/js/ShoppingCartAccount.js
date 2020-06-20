@@ -120,6 +120,9 @@ $(document).ready(function () {
                         <td>
                             <div class="name">
                                 <p>${Item.product_name}</p>
+                                <div class="row">
+                                <p>${Item.version_name}</p>
+                                </div>
                             </div>
                         </td>
                         <td>
@@ -130,9 +133,9 @@ $(document).ready(function () {
                             </div>
                         </td>
                         <td id="AAA">
-                            <div class="container" id="account">
+                            <div class="container" id="count">
                                 <div id="box">
-                                    <span>${Item.product_account}</span>
+                                    <span>${Item.product_count}</span>
                                 </div>
                             </div>
                         </td>
@@ -140,7 +143,7 @@ $(document).ready(function () {
                         <td>
                             <div class="total">
                                 <p>$
-                                    <span class="total">0</span>
+                                    <span class="total">${Item.product_count * Item.product_price}</span>
                                 </p>
                             </div>
                         </td>
