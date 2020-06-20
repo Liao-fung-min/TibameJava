@@ -62,18 +62,18 @@
 
 				<div id="product_photo2">
 					<div class="container">
-						<div class="row" id="product_photo2_1">
-							<div class="col-sm-12 col-md-4">
+						<div class="row" id="product_photo2_1" >
+							<div class="col-sm-12 col-md-4" style="border:solid 1px black">
 								<img
 									src="<%=request.getContextPath()%>/Product_Image?product_id=${product_VO.product_id}&image=2"
 									alt="" id="FirstProductImage">
 							</div>
-							<div class="col-sm-12 col-md-4">
+							<div class="col-sm-12 col-md-4" style="border:solid 1px black">
 								<img
 									src="<%=request.getContextPath()%>/Product_Image?product_id=${product_VO.product_id}&image=3"
 									alt="" id="FirstProductImage">
 							</div>
-							<div class="col-sm-12 col-md-4">
+							<div class="col-sm-12 col-md-4" style="border:solid 1px black">
 								<img
 									src="<%=request.getContextPath()%>/Product_Image?product_id=${product_VO.product_id}&image=4"
 									alt="" id="FirstProductImage">
@@ -91,15 +91,15 @@
 				<br>
 				<div id="product_select1">
 
-					<p style="text-align: center;" id="product_name" data-product_ID="${product_VO.product_id}">${product_VO.name}</p>
+					<p style="text-align: center; font-size: 30px;" id="product_name" data-product_ID="${product_VO.product_id}">${product_VO.name}</p>
 
 					<br>
                  <!--價錢 -->
 					<div class="col-sm-12 col-md-12">
-						<div class="row"
-							style="margin-top: 20px; background-color: rgb(211, 214, 214); height: 30px;">
+						<div class="row justify-content-center"
+							style="height: 30px; font-size:25px">
 							<p class="col-sm-12 col-md-4">直購價:$</p>
-							<p class="col-sm-12 col-md-5" style="text-align: left;"
+							<p class="col-sm-12 col-md-5" style="text-align: center; color:red; font-weight:800; background-color: #E4E4E4;"
 								id="FirstProductPrice">
 								 ${version_VOList.get(0).price}
 							</p>
@@ -159,10 +159,10 @@
 						</div>
 
 
-						<p style="text-align: left; line-height: 30px; margin-top: 20px;">★
+						<p style="text-align: left; line-height: 30px; margin-top: 20px; font-size: 25px;">★
 							全台獨一無二</p>
 
-						<p style="text-align: left;">★ 寵奴的最佳選擇</p>
+						<p style="text-align: left;font-size: 25px;">★ 寵奴的最佳選擇</p>
 
 					</div>
 
@@ -218,7 +218,7 @@
 								本公司食品業者登錄字號A-116606102-00000-0。
 							</p>
 						</div>
-						<div class="panel" id="four-panel">
+						<div class="panel" id="four-panel" style>
 							<p style="text-align: left;">
 								<c:forEach var="score_VO" items="${score_VOList}">
 									<div class="row">
@@ -226,7 +226,7 @@
 										<div class="col-sm-12 col-md-7" style="margin-top: 50px;">
 											<p style="text-align: left;">member_id</p>
 											<div class="row">
-												<div class="col-sm-12 col-md-5" style="right: 75px;">
+												<div class="col-sm-12 col-md-5" style="right: 65px;">
 													<span class="star"><i class="fas fa-star"
 														style=" ${(score_VO.score >=1)? ' color: #EF8216 ' :'' }"></i></span>
 													<span class="star"><i class="fas fa-star"
