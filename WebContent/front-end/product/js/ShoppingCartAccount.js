@@ -7,7 +7,7 @@ $('#Selectbtn').on('click', function () {
 });
 
 
-//信用卡動畫
+// 信用卡動畫
 
 $('.input-cart-number').on('keyup change', function () {
     $t = $(this);
@@ -59,7 +59,7 @@ setTimeout(function () {
 }, 500);
 
 
-//信用卡輸入
+// 信用卡輸入
 $('#animatcredit').on('click', function () {
     console.log(123)
     $(document).ready(function () {
@@ -67,7 +67,7 @@ $('#animatcredit').on('click', function () {
     });
 });
 
-//送出訂單
+// 送出訂單
 $('#Final_order').on('click', function () {
     const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
@@ -86,10 +86,44 @@ $('#Final_order').on('click', function () {
         reverseButtons: true
     }).then((result) => {
         if (result.value) {
-            window.location.href = `連結訂單主檔`
+// window.location.href = `連結訂單主檔`
+        	SetOrder();
         }
     })
 });
+
+
+
+var host = window.location.host;
+var path = window.location.pathname;
+var webCtx = path.substring(0, path.indexOf('/', 1));
+var url="http://" + host + webCtx;
+
+//把資料打到資料庫裡面
+
+function SetOrder(){
+	console.log('123', JSON.parse(localStorage.getItem("CartList")).CartList_Array)
+	 $.ajax({
+    	 url:  url +`/Order_master`, // 資料請求的網址
+        type: "POST", // GET | POST | PUT | DELETE | PATCH
+//        dataType: 'text json', // 預期會接收到回傳資料的格式： json | xml | html
+         data: {
+            SetOrder:JSON.stringify(JSON.parse(localStorage.getItem("CartList")).CartList_Array)
+         },
+        success: function (response) { // request 成功取得回應後執行
+//            AjaxSucces(response);
+        },
+        error: function (xhr) { // request 發生錯誤的話執行
+            console.log('error', xhr);
+            console.log(xhr);
+        },
+        complete: function (xhr) { // request 完成之後執行(在 success / error 事件之後執行)
+            console.log('complete', xhr);
+            console.log(xhr);
+        }
+    });
+}
+
 
 // 抓取local修改完的資料
 $(document).ready(function () {
@@ -97,9 +131,12 @@ $(document).ready(function () {
 
         let CartList = JSON.parse(localStorage.getItem("CartList"));
         let counter = 0;
-
+        let totalSum= 0;
         CartList.CartList_Array.forEach(function (Item, index) {
             console.log(index);
+            let foo =Item.product_price*Item.product_count;
+            totalSum += foo;
+           
             $("#CartBody").append(
                 `<tr class="tr" id="${"A"+ counter }">
                         <th scope="row">
@@ -130,7 +167,7 @@ $(document).ready(function () {
                         <td>
                             <div class="total">
                                 <p>$
-                                    <span class="total">${Item.product_price*Item.product_count}</span>
+                                    <span class="total">${foo}</span>
                                 </p>
                             </div>
                         </td>
@@ -139,6 +176,9 @@ $(document).ready(function () {
             );
             counter = counter + 1;
         });
+$("#totalSum").append(
+		totalSum
 
+);
     }
 });
