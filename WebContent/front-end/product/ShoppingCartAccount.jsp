@@ -201,8 +201,8 @@
                     訂單總金額:
                 </p>
                 <div class="row" style="margin-top: -25px; margin-left: 130px;">$
-                    <p>
-                        1000
+                    <p class="allTotal" id="totalSum">
+                       
                     </p>
                 </div>
             </div>
@@ -365,7 +365,7 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="<%=request.getContextPath()%>/front-end/product/js/ShoppingCartAccount.js"></script>
